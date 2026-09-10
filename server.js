@@ -19,10 +19,11 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({limit: '10mb', extended: false}))
 
 const mongoose = require('mongoose')
+console.log("DATABASE_URL:", process.env.DATABASE_URL)
 mongoose.connect(process.env.DATABASE_URL)
 const db = mongoose.connection
-db.on('error', error => console.error(error))
-db.once('open', () => console.log('Connected to Mongoose'))
+db.on('error', error => console.error("MongoDB Error:", error))
+db.once('open', () => { console.log('Connected to Mongoose')})
 
 app.use('/', indexRouter)
 app.use('/authors', authorRouter)
